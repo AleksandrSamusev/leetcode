@@ -1,26 +1,20 @@
-import java.util.Arrays;
-
+//168_excel_sheet_column_number
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+
+        System.out.println(convertToTitle(100));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static String convertToTitle(int columnNumber) {
+        final StringBuilder sb = new StringBuilder();
+
+        int num = columnNumber - 1;
+        while (num >= 0) {
+            int numChar = (num % 26) + 65;
+            System.out.println(num % 26);
+            sb.append((char) numChar);
+            num = (num / 26) - 1;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return sb.reverse().toString();
     }
 }
