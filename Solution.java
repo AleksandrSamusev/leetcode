@@ -1,8 +1,10 @@
+//leetCode 136. Single number
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
+        int[] nums = {7, 7, 6, 10, 6, 5, 5, 8, 8, 9, 9, 11, 11};
         System.out.println(singleNumber(nums));
     }
 
