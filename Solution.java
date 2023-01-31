@@ -1,25 +1,28 @@
-import java.util.Arrays;
+//268. Missing Number
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums = {3, 0, 1};
+        System.out.println(missingNumber(nums));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int missingNumber(int[] nums) {
+        int result = 0;
+        Set<Integer> set = new HashSet<>();
+        for (Integer value : nums) {
+            set.add(value);
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+
+        if (!set.contains(nums.length)) {
+            result = nums.length;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!set.contains(i)) {
+                result = i;
             }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
         }
         return result;
     }
