@@ -1,26 +1,32 @@
+//283. Move Zeroes
+
 import java.util.Arrays;
 
 public class Solution {
-    public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+    public static void main(String[] args) {//        1,1,1,1,0,4,6,5 index =4
+        int[] nums = {1};
+        moveZeroes(nums);
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static void moveZeroes(int[] nums) {
+        int index = 0;
+        boolean hasZero = false;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                index = i;
+                hasZero = true;
+                break;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        if (hasZero) {
+            for (int i = index; i < nums.length; i++) {
+                if (nums[i] != 0) {
+                    nums[index] = nums[i];
+                    nums[i] = 0;
+                    index++;
+                }
+            }
         }
-        return result;
+        System.out.println(Arrays.toString(nums));
     }
 }
