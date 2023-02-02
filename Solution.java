@@ -1,26 +1,36 @@
+//496. Next Greater Element I
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums1 = {137, 59, 92, 122, 52, 131, 79, 236};
+        int[] nums2 = {137, 59, 92, 122, 52, 131, 79, 236};
+        System.out.println(Arrays.toString(nextGreaterElement(nums1, nums2)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int value : nums1) {
+            for (int j = 0; j < nums2.length; j++) {
+                if (nums2[j] == value) {
+                    int temp = -1;
+                    for (int k = j; k < nums2.length; k++) {
+                        if (nums2[k] > nums2[j]) {
+                            temp = nums2[k];
+                            break;
+                        }
+                    }
+                    list.add(temp);
+                }
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        int[] result = new int[list.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = list.get(i);
         }
         return result;
     }
 }
+
