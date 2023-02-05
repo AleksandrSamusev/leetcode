@@ -1,26 +1,48 @@
+//884. Uncommon Words from Two Sentences
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s1 = "apple apple";
+        String s2 = "banana";
+        System.out.println(Arrays.toString(uncommonFromSentences(s1, s2)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String[] uncommonFromSentences(String s1, String s2) {
+        ArrayList<String> listOne = new ArrayList<>();
+        ArrayList<String> listTwo = new ArrayList<>();
+        String[] arrOne = s1.split(" ");
+        String[] arrTwo = s2.split(" ");
+
+        ArrayList<String> doubles = new ArrayList<>();
+        for (int i = 0; i < arrOne.length; i++) {
+            if (!listOne.contains(arrOne[i])) {
+                listOne.add(arrOne[i]);
+            } else {
+                if (!doubles.contains(arrOne[i])) {
+                    doubles.add(arrOne[i]);
+                }
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        for (int i = 0; i < arrTwo.length; i++) {
+            if (!listTwo.contains(arrTwo[i])) {
+                listTwo.add(arrTwo[i]);
+            } else {
+                if (!doubles.contains(arrTwo[i])) {
+                    doubles.add(arrTwo[i]);
+                }
+            }
         }
-        return result;
+
+        listOne.removeAll(doubles);
+        listTwo.removeAll(doubles);
+
+        ArrayList<String> listTemp = new ArrayList<>(listOne);
+        listOne.removeAll(listTwo);
+        listTwo.removeAll(listTemp);
+        listOne.addAll(listTwo);
+        return listOne.toArray(new String[0]);
     }
 }
