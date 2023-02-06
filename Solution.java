@@ -1,26 +1,31 @@
-import java.util.Arrays;
+//944. Delete Columns to Make Sorted
+
+import java.util.ArrayList;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String[] strs = {"zyx", "wvu", "tsr"};
+        System.out.println(minDeletionSize(strs));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int minDeletionSize(String[] strs) {
+        int delCount = 0;
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < strs.length; i++) {
+            list.add(strs[i]);
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (int i = 0; i < strs[0].length(); i++) {
+            StringBuilder sb = new StringBuilder();
+            for (String str : list) {
+                sb.append(str.charAt(i));
+            }
+            for (int j = 1; j < sb.length(); j++) {
+                if (sb.charAt(j) < sb.charAt(j - 1)) {
+                    delCount++;
+                    break;
+                }
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return delCount;
     }
 }
