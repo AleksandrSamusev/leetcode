@@ -1,26 +1,22 @@
-import java.util.Arrays;
+//125. Valid Palindrome
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "A man, a plan, a canal: Panama";
+        System.out.println(isPalindrome(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static boolean isPalindrome(String s) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < s.length(); i++) {
+            if (Character.isLetter(s.charAt(i))) {
+                sb.append(String.valueOf(s.charAt(i)).toLowerCase());
+            } else if (Character.isDigit(s.charAt(i))) {
+                sb.append(s.charAt(i));
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+
+        return sb.toString().equals(sb.reverse().toString());
     }
 }
