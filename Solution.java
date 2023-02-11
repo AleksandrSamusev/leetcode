@@ -1,26 +1,31 @@
+//349. Intersection of Two Arrays
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums1 = {4, 9, 5};
+        int[] nums2 = {9, 4, 9, 8, 4};
+        System.out.println(Arrays.toString(intersection(nums1, nums2)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int[] intersection(int[] nums1, int[] nums2) {
+        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> result = new ArrayList<>();
+        for (Integer value : nums1) {
+            list.add(value);
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (int i = 0; i < nums2.length; i++) {
+            if (list.contains(nums2[i]) && !result.contains(nums2[i])) {
+                result.add(nums2[i]);
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        int[] res = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            res[i] = result.get(i);
         }
-        return result;
+        return res;
     }
 }
+
