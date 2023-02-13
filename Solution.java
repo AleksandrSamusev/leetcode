@@ -1,26 +1,24 @@
-import java.util.Arrays;
+//389. Find the Difference
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "abcd";
+        String t = "abcde";
+        System.out.println(findTheDifference(s, t));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static char findTheDifference(String s, String t) {
+        int[] alphabetChars = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            alphabetChars[s.charAt(i) - 'a']++;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (int i = 0; i < t.length(); i++) {
+            if (alphabetChars[t.charAt(i) - 'a'] != 0) {
+                alphabetChars[t.charAt(i) - 'a']--;
+            } else if (alphabetChars[t.charAt(i) - 'a'] == 0) {
+                return t.charAt(i);
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return 0;
     }
 }
