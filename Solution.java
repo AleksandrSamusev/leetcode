@@ -1,26 +1,31 @@
-import java.util.Arrays;
+//415. Add Strings
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String num1 = "222";
+        String num2 = "333";
+        System.out.println(addStrings(num1, num2));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String addStrings(String num1, String num2) {
+        int scoop = 0;
+        int i = num1.length() - 1;
+        int j = num2.length() - 1;
+        StringBuilder sb = new StringBuilder();
+        while (i >= 0 || j >= 0) {
+            int sum = scoop;
+            if (i >= 0) {
+                sum += num1.charAt(i--) - '0';
             }
+            if (j >= 0) {
+                sum += num2.charAt(j--) - '0';
+            }
+            sb.append(sum % 10);
+            scoop = sum / 10;
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        if (scoop != 0) {
+            sb.append(scoop);
         }
-        return result;
+        return sb.reverse().toString();
     }
 }
