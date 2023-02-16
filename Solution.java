@@ -1,26 +1,38 @@
-import java.util.Arrays;
+//682. Baseball Game
+
+
+import java.util.ArrayList;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String[] str = {"5", "2", "C", "D", "+"};
+        System.out.println(calPoints(str));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int calPoints(String[] operations) {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        int counter = 0;
+        for (int i = 0; i < operations.length; i++) {
+            if (operations[i].equals("+")) {
+                int temp = list.get(list.size() - 1) + list.get(list.size() - 2);
+                list.add(temp);
+                counter += temp;
+            } else if (operations[i].equals("C")) {
+                int temp = list.get(list.size() - 1);
+                counter -= temp;
+                list.remove(list.size() - 1);
+            } else if (operations[i].equals("D")) {
+                int temp = list.get(list.size() - 1) * 2;
+                list.add(temp);
+                counter += temp;
+            } else if (Character.isDigit(operations[i].charAt(0)) || Character.isDigit(operations[i].charAt(1))) {
+                int temp = Integer.parseInt(operations[i]);
+                list.add(temp);
+                counter += temp;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+
+        return counter;
     }
 }
