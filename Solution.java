@@ -1,25 +1,26 @@
+//922. Sort Array By Parity II
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums = {888, 505, 627, 846};                                                    //[888,505,846,627]
+        System.out.println(Arrays.toString(sortArrayByParityII(nums)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int[] sortArrayByParityII(int[] nums) {
+        int even = 0;
+        int odd = 1;
+
+        int[] result = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] % 2 == 0) {
+                result[even] = nums[i];
+                even += 2;
+            } else {
+                result[odd] = nums[i];
+                odd += 2;
             }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
         }
         return result;
     }
