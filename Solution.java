@@ -1,26 +1,32 @@
+//599. Minimum Index Sum of Two Lists
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String[] list1 = {"happy", "sad", "good"};
+        String[] list2 = {"sad", "happy", "good"};
+        System.out.println(Arrays.toString(findRestaurant(list1, list2)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String[] findRestaurant(String[] list1, String[] list2) {
+        int distance = Integer.MAX_VALUE;
+        ArrayList<String> l1 = new ArrayList<>(Arrays.asList(list1));
+        ArrayList<String> l2 = new ArrayList<>(Arrays.asList(list2));
+        ArrayList<String> l3 = new ArrayList<>(l2);
+        ArrayList<String> result = new ArrayList<>();
+        l3.retainAll(l1);
+        for (String s : l3) {
+            int temp = l2.indexOf(s) + l1.indexOf(s);
+            if (temp < distance) {
+                result.clear();
+                distance = temp;
+                result.add(s);
+            } else if (temp == distance) {
+                result.add(s);
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return result.toArray(new String[0]);
     }
 }
