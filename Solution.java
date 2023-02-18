@@ -1,26 +1,52 @@
-import java.util.Arrays;
+//824. Goat Latin
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String sentence = "yDumm";
+        System.out.println(toGoatLatin(sentence));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String toGoatLatin(String sentence) {
+        String[] str = sentence.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < str.length; i++) {
+            String temp = str[i];
+            char ch = temp.charAt(0);
+            if (ch == 'a' || ch == 'A' || ch == 'e' || ch == 'E' || ch == 'i' || ch == 'I' || ch == 'o' || ch == 'O'
+                    || ch == 'u' || ch == 'U') {
+                sb.append(changeIfVowel(temp, i));
+            } else {
+                sb.append(changeIfConsonant(temp, i));
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return sb.toString().trim();
+
     }
+
+    private static String changeIfConsonant(String s, int index) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(s.substring(1));
+        sb.append(s.charAt(0));
+        sb.append("ma");
+        addA(sb, index);
+        return sb.toString();
+    }
+
+    private static String changeIfVowel(String s, int index) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(s);
+        sb.append("ma");
+        addA(sb, index);
+        return sb.toString();
+    }
+
+    private static String addA(StringBuilder sb, int index) {
+        for (int i = 0; i <= index; i++) {
+            sb.append("a");
+        }
+        sb.append(" ");
+        return sb.toString();
+    }
+
+
 }
