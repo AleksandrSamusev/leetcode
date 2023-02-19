@@ -1,26 +1,61 @@
-import java.util.Arrays;
+//12. Integer to Roman
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int num = 58;
+        System.out.println(intToRoman(num));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String intToRoman(int num) {
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            if (num >= 1000) {
+                sb.append("M");
+                num -= 1000;
+            } else if (num >= 900) {
+                sb.append("CM");
+                num -= 900;
+            } else if (num >= 500) {
+                sb.append("D");
+                num -= 500;
+            } else if (num >= 400) {
+                sb.append("CD");
+                num -= 400;
+            } else if (num >= 100) {
+                sb.append("C");
+                num -= 100;
+            } else if (num >= 90) {
+                sb.append("XC");
+                num -= 90;
+            } else if (num >= 50) {
+                sb.append("L");
+                num -= 50;
+            } else if (num >= 40) {
+                sb.append("XL");
+                num -= 40;
+            } else if (num >= 10) {
+                sb.append("X");
+                num -= 10;
+            } else if (num >= 9) {
+                sb.append("IX");
+                num -= 9;
+            } else if (num >= 5) {
+                sb.append("V");
+                num -= 5;
+            } else if (num == 4) {
+                sb.append("IV");
+                num -= 4;
+            } else if (num == 3) {
+                sb.append("III");
+                num -= 3;
+            } else if (num == 2) {
+                sb.append("II");
+                num -= 2;
+            } else if (num == 1) {
+                sb.append("I");
+                num -= 1;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return sb.toString();
     }
 }
