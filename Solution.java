@@ -1,26 +1,42 @@
-import java.util.Arrays;
+//7. Reverse Integer
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int x = 1534236469;
+        System.out.println(reverse(x));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int reverse(int x) {
+        if (x == 0) {
+            return 0;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        String temp = String.valueOf(x);
+        StringBuilder sb = new StringBuilder();
+        char ch = 0;
+        long result;
+        if (temp.charAt(0) == '-') {
+            sb.append(temp.substring(1));
+            ch = '-';
+        } else {
+            sb.append(temp);
+        }
+        sb.reverse();
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '0') {
+                sb.deleteCharAt(i);
+                i--;
+            } else {
+                break;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        if (ch != 0) {
+            result = Long.parseLong(ch + sb.toString());
+        } else {
+            result = Long.parseLong(sb.toString());
         }
-        return result;
+        if ((result < Integer.MAX_VALUE && result > Integer.MIN_VALUE)) {
+            return (int) result;
+        }
+        return 0;
     }
 }
