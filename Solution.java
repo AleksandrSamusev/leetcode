@@ -1,26 +1,45 @@
-import java.util.Arrays;
+//541. Reverse String II
+
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "abcdefg";
+        int k = 3;
+        System.out.println(reverseStr(s, k));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static String reverseStr(String s, int k) {
+        int counter = 0;
+        StringBuilder sb = new StringBuilder(s);
+        StringBuilder result = new StringBuilder();
+        if (s.length() == 1) {
+            return s;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        if (s.length() - counter < k) {
+            result.append(sb).reverse();
+            return result.toString();
+        }
+        while (s.length() - counter > 2 * k) {
+            for (int i = k - 1; i >= 0; i--) {
+                result.append(sb.charAt(i));
+            }
+            for (int j = k; j < 2 * k; j++) {
+                result.append(sb.charAt(j));
+            }
+            sb.delete(0, 2 * k);
+            counter += 2 * k;
+        }
+        if (s.length() - counter < k) {
+            String temp = String.valueOf(sb.reverse());
+            result.append(temp);
+        } else if (s.length() - counter <= 2 * k) {
+            for (int i = k - 1; i >= 0; i--) {
+                result.append(sb.charAt(i));
+            }
+            for (int j = k; j < sb.length(); j++) {
+                result.append(sb.charAt(j));
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return result.toString();
     }
 }
