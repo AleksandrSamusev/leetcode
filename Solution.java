@@ -1,26 +1,70 @@
-import java.util.Arrays;
+//8. String to Integer (atoi)
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "42";
+        System.out.println(myAtoi(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int myAtoi(String s) {
+        char ch = 0;
+        int counter = 0;
+        String result;
+        double res = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == ' ') {
+                counter++;
+            } else if (s.charAt(i) == '-') {
+                ch = '-';
+                counter++;
+                break;
+            } else if (s.charAt(i) == '+') {
+                ch = '+';
+                counter++;
+                break;
+            } else if (Character.isDigit(s.charAt(i))) {
+                break;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        for (int i = counter; i < s.length(); i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                while (Character.isDigit(s.charAt(i))) {
+                    sb.append(s.charAt(i));
+                    if (i < s.length() - 1) {
+                        i++;
+                    } else {
+                        break;
+                    }
+                }
+                break;
+            } else {
+                return 0;
+            }
         }
-        return result;
+
+        if (sb.length() == 0) {
+            return 0;
+        }
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == 0) {
+                sb.deleteCharAt(i);
+                i--;
+            } else {
+                break;
+            }
+        }
+        if (ch != 0) {
+            result = ch + sb.toString();
+        } else {
+            result = sb.toString();
+        }
+        res = Double.parseDouble(result);
+        if (res > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        } else if (res < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        return (int) res;
     }
 }
