@@ -1,26 +1,26 @@
-import java.util.Arrays;
+//448. Find All Numbers Disappeared in an Array
 
-public class Solution {
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums = {10, 2, 5, 10, 9, 1, 1, 4, 3, 7};  // 1,1,2,3,4,5,7,9,10,10
+        System.out.println(findDisappearedNumbers(nums));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static List<Integer> findDisappearedNumbers(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (Integer number : nums) {
+            set.add(number);
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
+        List<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= nums.length; i++) {
+            list.add(i);
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        list.removeAll(set);
+        return list;
     }
 }
