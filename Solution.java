@@ -1,26 +1,33 @@
-import java.util.Arrays;
+//409. Longest Palindrome
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "aaAAsss";
+        System.out.println(longestPalindrome(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int longestPalindrome(String s) {
+        int[] array = new int[58];
+        int counter = 0;
+        int correction = 0;
+        boolean hasOdd = false;
+        for (int i = 0; i < s.length(); i++) {
+            array[s.charAt(i) - 'A']++;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (Integer num : array) {
+            if (num > 1 && num % 2 != 0 && !hasOdd) {
+                counter += num;
+                hasOdd = true;
+            } else if (num > 1 && num % 2 != 0 && hasOdd) {
+                counter += num;
+                correction++;
+            } else if (num > 1 && num % 2 == 0) {
+                counter += num;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        if (counter % 2 == 0 && counter < s.length()) {
+            return counter + 1;
         }
-        return result;
+        return counter - correction;
     }
 }
