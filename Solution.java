@@ -1,26 +1,30 @@
-import java.util.Arrays;
+//392. Is Subsequence
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "aaaaaa";
+        String t = "aaaaaa";
+        System.out.println(isSubsequence(s, t));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static boolean isSubsequence(String s, String t) {
+        int index_t = 0;
+        int count_s = 0;
+        int count_t = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            count_s++;
+            for (int j = index_t; j < t.length(); j++) {
+                if (index_t > t.length() - 1 && i < s.length() - 1) {
+                    return false;
+                }
+                if (s.charAt(i) == t.charAt(j)) {
+                    count_t++;
+                    index_t = j + 1;
+                    break;
+                }
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return count_t == count_s;
     }
 }
