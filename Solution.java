@@ -1,26 +1,31 @@
-import java.util.Arrays;
+//482. License Key Formatting
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "--a-a-a-a--";               //k47r-0a42
+        int k = 4;
+        System.out.println(licenseKeyFormatting(s, k));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String licenseKeyFormatting(String s, int k) {
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (count < k) {
+                if (s.charAt(i) != '-') {
+                    sb.append(s.charAt(i));
+                    count++;
+                }
+            } else {
+                sb.append("-");
+                count = 0;
+                i++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        sb.reverse();
+        if (sb.length() > 0 && sb.charAt(0) == '-') {
+            return sb.substring(1, sb.length()).toUpperCase();
         }
-        return result;
+        return sb.toString().toUpperCase();
     }
 }
