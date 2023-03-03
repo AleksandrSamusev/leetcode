@@ -1,26 +1,27 @@
-import java.util.Arrays;
+//796. Rotate String
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "abcde";
+        String goal = "cdeab";
+        System.out.println(rotateString(s, goal));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static boolean rotateString(String s, String goal) {
+        int iterations = s.length() - 1;
+        if (s.equals(goal)) {
+            return true;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (int i = 0; i <= iterations; i++) {
+            s = firstToEnd(s);
+            if (s.equals(goal)) {
+                return true;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return false;
+    }
+
+    public static String firstToEnd(String str) {
+        return str.substring(1) + str.charAt(0);
     }
 }
