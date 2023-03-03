@@ -1,26 +1,45 @@
-import java.util.Arrays;
+//28. Find the Index of the First Occurrence in a String
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String haystack = "mississippi";
+        String needle = "issip";
+        System.out.println(strStr(haystack, needle));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int strStr(String haystack, String needle) {
+        if (needle.length() > haystack.length()) {
+            return -1;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+
+        int counter = 0;
+        int index = -1;
+        for (int i = 0; i < haystack.length(); i++) {
+            if (haystack.charAt(i) == needle.charAt(0)) {
+                index = i;
+                int tempH = i;
+                int tempN = 0;
+                while (haystack.charAt(tempH) == needle.charAt(tempN)) {
+                    counter++;
+                    tempH++;
+                    tempN++;
+                    if (tempN == needle.length()) {
+                        break;
+                    }
+                    if (tempH == haystack.length()) {
+                        break;
+                    }
+
+                }
+                if (counter != needle.length()) {
+                    index = -1;
+                    counter = 0;
+                } else {
+                    return index;
+                }
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return index;
+
     }
 }
