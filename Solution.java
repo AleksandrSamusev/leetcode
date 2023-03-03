@@ -1,26 +1,38 @@
-import java.util.Arrays;
+//704. Binary Search
+
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums = {-1, 0, 3, 5, 8, 12};
+        int target = 9;
+        System.out.println(search(nums, target));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int mid = 0;
+
+        while (left != right) {
+            if (nums[left] == target) {
+                return left;
+            }
+            if (nums[right] == target) {
+                return right;
+            }
+
+            mid = (left + right) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        if (nums[mid] == target) {
+            return mid;
         }
-        return result;
+        return -1;
     }
 }
