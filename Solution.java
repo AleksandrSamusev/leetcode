@@ -1,26 +1,43 @@
+//1011. Capacity To Ship Packages Within D Days
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] weights = {1, 2, 3, 4, 5, 6, 7, 8};
+        int days = 2;
+        System.out.println(shipWithinDays(weights, days));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int shipWithinDays(int[] weights, int days) {
+
+        int minCap = Arrays.stream(weights).max().getAsInt();                            // 8
+        int maxCap = Arrays.stream(weights).reduce(0, Integer::sum);           // 36
+        if (days == 1) {
+            return maxCap;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (int i = minCap; i <= maxCap; i++) {
+            if (checkIfPassed(i, weights, days)) {
+                return i;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        return 0;
+    }
+
+
+    public static boolean checkIfPassed(int capacity, int[] weights, int days) {
+        int day = 1;
+        int currentWeight = 0;
+        for (Integer weight : weights) {
+            currentWeight += weight;
+            if (currentWeight > capacity) {
+                day++;
+                currentWeight = weight;
+                if (day > days) {
+                    return false;
+                }
+            }
         }
-        return result;
+        return day <= days;
     }
 }
