@@ -28,13 +28,13 @@ public class Solution {
             count[arr2[i]] = 0;
         }
         for (int i = 0; i < count.length; i++) {
+            if (index == arr1.length - 1) {
+                break;
+            }
             if (count[i] > 0) {
                 int temp = count[i];
                 while (temp > 0) {
                     result[index] = i;
-                    if (index == arr1.length - 1) {
-                        break;
-                    }
                     index++;
                     temp--;
                 }
