@@ -1,26 +1,19 @@
-import java.util.Arrays;
+//1323. Maximum 69 Number
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int num = 9669;
+        System.out.println(maximum69Number(num));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int maximum69Number(int num) {
+        String str = String.valueOf(num);
+        System.out.println(str);
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '6') {
+                return Integer.parseInt(str.substring(0, i) + '9' + str.substring(i + 1));
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return num;
     }
 }
