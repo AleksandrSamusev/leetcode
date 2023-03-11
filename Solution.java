@@ -1,26 +1,20 @@
-import java.util.Arrays;
+//1217. Minimum Cost to Move Chips to The Same Position
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] position = {2, 2, 2, 2, 3, 3, 3, 3};
+        System.out.println(minCostToMoveChips(position));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int minCostToMoveChips(int[] position) {
+        int[] result = new int[2];
+        for (int i = 0; i < position.length; i++) {
+            if (position[i] % 2 == 0) {
+                result[0]++;
+            } else {
+                result[1]++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return Math.min(result[0], result[1]);
     }
 }
