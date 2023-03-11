@@ -1,26 +1,33 @@
-import java.util.Arrays;
+//2243. Calculate Digit Sum of a String
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "11111222223";
+        int k = 3;
+        System.out.println(digitSum(s, k));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static String digitSum(String s, int k) {
+        while (s.length() > k) {
+            s = createNewString(s, k);
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        return s;
+    }
+
+    public static String createNewString(String s, int k) {
+        StringBuilder sb = new StringBuilder();
+        int sum = 0;
+        int temp = 0;
+        for (int i = 0; i < s.length(); i++) {
+            sum += Integer.parseInt(String.valueOf(s.charAt(i)));
+            temp++;
+            if (temp == k || i == s.length() - 1) {
+                sb.append(sum);
+                sum = 0;
+                temp = 0;
             }
+
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return sb.toString();
     }
 }
