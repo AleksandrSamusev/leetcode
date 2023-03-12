@@ -1,26 +1,18 @@
-import java.util.Arrays;
+//1287. Element Appearing More Than 25% In Sorted Array
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] arr = {1, 2, 2, 6, 6, 6, 6, 7, 10};
+        System.out.println(findSpecialInteger(arr));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int findSpecialInteger(int[] arr) {
+        int qty = arr.length / 4;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == arr[i + qty]) {
+                return arr[i];
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return 0;
     }
 }
