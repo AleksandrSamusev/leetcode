@@ -1,26 +1,24 @@
-import java.util.Arrays;
+//509. Fibonacci Number
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int n = 4;
+        System.out.println(fib(n));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int fib(int n) {
+        if (n == 0) {
+            return 0;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
+        if (n == 1) {
+            return 1;
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        int[] arr = new int[31];
+        arr[0] = 0;
+        arr[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            arr[i] = arr[i - 1] + arr[i - 2];
         }
-        return result;
+        return arr[n];
     }
 }
