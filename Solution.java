@@ -1,26 +1,69 @@
+//34. Find First and Last Position of Element in Sorted Array
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] nums = {2, 2};
+        int target = 2;
+        System.out.println(Arrays.toString(searchRange(nums, target)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int[] searchRange(int[] nums, int target) {
+
+        int index = -1;
+        int left = 0;
+        int right = nums.length - 1;
+        int mid;
+
+        if (nums.length == 0) {
+            return new int[]{-1, -1};
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        if (nums.length == 1 && nums[0] == target) {
+            return new int[]{0, 0};
+        }
+        while (left <= right) {
+            mid = (left + right) / 2;
+            if (nums[left] == target) {
+                index = left;
+                break;
+            } else if (nums[right] == target) {
+                index = right;
+                break;
+            } else if (nums[mid] == target) {
+                index = mid;
+                break;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+
+        if (index == -1) {
+            return new int[]{-1, -1};
         }
-        return result;
+        return new int[]{findLeft(nums, target, index), findRight(nums, target, index)};
     }
+
+    public static int findLeft(int[] nums, int target, int index) {
+        if (nums[0] == target) {
+            return 0;
+        }
+        while (nums[index] == target && index != 0) {
+            index--;
+        }
+        return index + 1;
+    }
+
+    public static int findRight(int[] nums, int target, int index) {
+        if (nums[nums.length - 1] == target) {
+            return nums.length - 1;
+        }
+        while (nums[index] == target && index != nums.length - 1) {
+            index++;
+        }
+        return index - 1;
+    }
+
 }
