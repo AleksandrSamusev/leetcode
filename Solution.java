@@ -1,25 +1,31 @@
+//1331. Rank Transform of an Array
+
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] arr = {37, 12, 28, 9, 100, 56, 80, 5, 12};   // {5, 9, 12, 12, 28, 37, 56, 80, 100}
+        System.out.println(Arrays.toString(arrayRankTransform(arr)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int[] arrayRankTransform(int[] arr) {
+        int[] temp = Arrays.copyOf(arr, arr.length);
+        Arrays.sort(temp);
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int value = 1;
+        for (int i = 0; i < temp.length; i++) {
+            if (!map.containsKey(temp[i])) {
+                map.put(temp[i], value);
+                value++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+
+        int[] result = new int[arr.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = map.get(arr[i]);
         }
         return result;
     }
