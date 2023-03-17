@@ -1,26 +1,47 @@
-import java.util.Arrays;
+//63_Unique_paths_II
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[][] obstacleGrid = {
+                {0, 0, 0},
+                {0, 1, 0},
+                {0, 0, 0}};
+        System.out.println(uniquePathsWithObstacles(obstacleGrid));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int rows = obstacleGrid.length;
+        int cols = obstacleGrid[0].length;
+        int[][] dp = new int[rows][cols];
+        boolean flag = false;
+
+        for (int i = 0; i < cols; i++) {
+            if (flag || obstacleGrid[0][i] == 1) {
+                dp[0][i] = 0;
+                flag = true;
+            } else {
+                dp[0][i] = 1;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        flag = false;
+        for (int i = 0; i < rows; i++) {
+            if (flag || obstacleGrid[i][0] == 1) {
+                dp[i][0] = 0;
+                flag = true;
+            } else {
+                dp[i][0] = 1;
+            }
         }
-        return result;
+
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (obstacleGrid[i][j] == 1) {
+                    dp[i][j] = 0;
+                } else {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                }
+            }
+        }
+        return dp[rows - 1][cols - 1];
     }
 }
