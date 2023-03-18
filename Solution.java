@@ -1,26 +1,34 @@
-import java.util.Arrays;
+//1252. Cells with Odd Values in a Matrix
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int m = 2;
+        int n = 2;
+        int[][] indices = {{1, 1}, {0, 0}};
+        System.out.println(oddCells(m, n, indices));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int oddCells(int rows, int cols, int[][] indices) {
+        int[][] matrix = new int[rows][cols];
+        int oddCounter = 0;
+        for (int[] array : indices) {
+            int rowToIncrease = array[0];
+            int columnToIncrease = array[1];
+
+            for (int i = 0; i < cols; i++) {
+                matrix[rowToIncrease][i]++;
+            }
+            for (int i = 0; i < rows; i++) {
+                matrix[i][columnToIncrease]++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (matrix[i][j] % 2 != 0) {
+                    oddCounter++;
+                }
+            }
         }
-        return result;
+        return oddCounter;
     }
 }
