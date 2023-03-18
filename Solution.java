@@ -1,26 +1,32 @@
+//1189. Maximum Number of Balloons
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String text = "loonbalxballpoon";
+        System.out.println(maxNumberOfBalloons(text));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int maxNumberOfBalloons(String text) {
+        int[] array = new int[5];
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) == 'b') {
+                array[0]++;
+            } else if (text.charAt(i) == 'a') {
+                array[1]++;
+            } else if (text.charAt(i) == 'l') {
+                array[2]++;
+            } else if (text.charAt(i) == 'o') {
+                array[3]++;
+            } else if (text.charAt(i) == 'n') {
+                array[4]++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+
+        array[2] /= 2;
+        array[3] /= 2;
+
+        return Arrays.stream(array).min().getAsInt();
     }
 }
