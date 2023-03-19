@@ -1,26 +1,19 @@
-import java.util.Arrays;
+//1281. Subtract the Product and Sum of Digits of an Integer
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int n = 234;
+        System.out.println(subtractProductAndSum(n));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int subtractProductAndSum(int n) {
+        int sum = 0;
+        int mult = 1;
+        while (n > 0) {
+            sum += n % 10;
+            mult *= n % 10;
+            n = n / 10;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return mult - sum;
     }
 }
