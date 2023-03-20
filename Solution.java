@@ -1,26 +1,18 @@
-import java.util.Arrays;
+//1266. Minimum Time Visiting All Points
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[][] points = {{1, 1}, {3, 4}, {-1, 0}};
+        System.out.println(minTimeToVisitAllPoints(points));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int minTimeToVisitAllPoints(int[][] points) {
+        int ans = 0;
+        for (int i = 1; i < points.length; i++) {
+            int[] curr = points[i];
+            int[] prev = points[i - 1];
+            ans += Math.max(Math.abs(curr[0] - prev[0]), Math.abs(curr[1] - prev[1]));
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return ans;
     }
 }
