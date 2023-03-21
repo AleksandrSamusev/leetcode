@@ -1,26 +1,30 @@
+//1317. Convert Integer to the Sum of Two No-Zero Integers
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int n = 2;
+        System.out.println(Arrays.toString(getNoZeroIntegers(n)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int[] getNoZeroIntegers(int n) {
+        int firstNumber = 1;
+        int secondNumber = n - firstNumber;
+        while (isHasZeros(firstNumber) || isHasZeros(secondNumber)) {
+            firstNumber++;
+            secondNumber = n - firstNumber;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        return new int[]{firstNumber, secondNumber};
+    }
+
+    public static boolean isHasZeros(int n) {
+        while (n > 0) {
+            if (n % 10 == 0) {
+                return true;
             }
+            n /= 10;
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return false;
     }
 }
