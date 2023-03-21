@@ -1,26 +1,25 @@
-import java.util.Arrays;
+//2269. Find the K-Beauty of a Number
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int num = 240;
+        int k = 2;
+        System.out.println(divisorSubstrings(num, k));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int divisorSubstrings(int num, int k) {
+        String sNum = String.valueOf(num);
+        int counter = 0;
+        if (sNum.length() == k) {
+            return 1;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (int i = 0; i <= sNum.length() - k; i++) {
+            String check = sNum.substring(i, i + k);
+            int value = Integer.parseInt(check);
+            if (value > 0 && num % value == 0) {
+                counter++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return counter;
     }
 }
