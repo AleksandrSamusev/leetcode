@@ -1,26 +1,51 @@
-import java.util.Arrays;
+//1346. Check If N and Its Double Exist
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] arr = {-2, 0, 10, -19, 4, 6, -8};
+        System.out.println(checkIfExist(arr));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static boolean checkIfExist(int[] arr) {
+        int[] arrayOfNegative = new int[1001];
+        int[] arrayOfPositive = new int[1001];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] >= 0) {
+                arrayOfPositive[arr[i]]++;
+            } else if (arr[i] < 0) {
+                arrayOfNegative[Math.abs(arr[i])]++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        for (int i = 1; i <= 500; i++) {
+            if (arrayOfNegative[i] > 0) {
+                if (i % 2 != 0) {
+                    if (arrayOfNegative[i * 2] > 0) {
+                        return true;
+                    }
+                } else {
+                    if (arrayOfNegative[i / 2] > 0 || arrayOfNegative[i * 2] > 0) {
+                        return true;
+                    }
+                }
+            }
         }
-        return result;
+
+        for (int i = 0; i <= 500; i++) {
+            if (i == 0 && arrayOfPositive[i] >= 2) {
+                return true;
+            }
+            if (arrayOfPositive[i] > 0 && i != 0) {
+                if (i % 2 != 0) {
+                    if (arrayOfPositive[i * 2] > 0) {
+                        return true;
+                    }
+                } else {
+                    if (arrayOfPositive[i / 2] > 0 || arrayOfPositive[i * 2] > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
