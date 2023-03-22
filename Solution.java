@@ -1,26 +1,29 @@
-import java.util.Arrays;
+//1290. Convert Binary Number in a Linked List to Integer
+class ListNode {
+    int val;
+    ListNode next;
 
-public class Solution {
-    public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+    ListNode() {
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    ListNode(int val) {
+        this.val = val;
+    }
+
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+}
+
+public class Solution {
+    public int getDecimalValue(ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        ListNode p = head;
+        while (p != null) {
+            sb.append(p.val);
+            p = p.next;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return Integer.parseInt(sb.toString(), 2);
     }
 }
