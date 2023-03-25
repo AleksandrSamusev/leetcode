@@ -1,25 +1,24 @@
-import java.util.Arrays;
+//2591. Distribute Money to Maximum Children
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int money = 13;
+        int children = 3;
+        System.out.println(distMoney(money, children));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int distMoney(int money, int children) {
+        if (money < children) {
+            return -1;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
+        int result = 0;
+        int moneyLeft = money - children;
+        while (moneyLeft >= 7 && result != children) {
+            result++;
+            moneyLeft -= 7;
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        if (result == children && moneyLeft > 0 || result == children - 1 && moneyLeft == 3) {
+            return --result;
         }
         return result;
     }
