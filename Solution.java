@@ -1,26 +1,30 @@
-import java.util.Arrays;
+//1332. Remove Palindromic Subsequences
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "baabb";
+        System.out.println(removePalindromeSub(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int removePalindromeSub(String s) {
+        int count = 0;
+        int start = 0;
+        int end = s.length();
+        while (start < s.length()) {
+            if (isPalindrome(s.substring(start, end))) {
+                count++;
+                start = end;
+                end = s.length();
+            } else {
+                end--;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return Math.min(count, 2);
+    }
+
+    public static boolean isPalindrome(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        sb.reverse();
+        return str.equals(sb.toString());
     }
 }
