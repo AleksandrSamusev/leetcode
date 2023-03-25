@@ -1,25 +1,31 @@
+//1103. Distribute Candies to People
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int candies = 7;
+        int num_people = 4; //
+        System.out.println(Arrays.toString(distributeCandies(candies, num_people)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int[] distributeCandies(int candies, int num_people) {
+        int[] result = new int[num_people];
+        int value = 1;
+        while (candies > 0) {
+            for (int i = 0; i < num_people; i++) {
+                if (candies < value) {
+                    result[i] = result[i] + candies;
+                    candies = 0;
+                    break;
+                }
+                result[i] = result[i] + value;
+                candies -= value;
+                if (candies <= 0) {
+                    break;
+                }
+                value++;
             }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
         }
         return result;
     }
