@@ -1,26 +1,42 @@
-import java.util.Arrays;
+//3. Longest Substring Without Repeating Characters
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "pwwkew";
+        System.out.println(lengthOfLongestSubstring(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int lengthOfLongestSubstring(String s) {
+
+        if (s.length() == 0) {
+            return 0;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        if (s.length() == 1) {
+            return 1;
+        }
+        int i = 0;
+        int j = 0;
+        int max = 0;
+
+        Set<Character> set = new HashSet<>();
+
+        while (j < s.length()) {
+
+            if (set.contains(s.charAt(j))) {
+                while (set.contains(s.charAt(j))) {
+                    set.remove(s.charAt(i));
+                    i++;
+                }
             }
+            set.add(s.charAt(j));
+            if (set.size() > max) {
+                max = set.size();
+            }
+            j++;
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return max;
     }
 }
