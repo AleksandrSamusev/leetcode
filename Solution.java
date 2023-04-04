@@ -1,26 +1,32 @@
+//733. Flood Fill
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[][] image = {{1, 1, 1}, {1, 1, 0}, {1, 0, 1}};
+        int sr = 1;
+        int sc = 1;
+        int color = 2;
+        System.out.println(Arrays.deepToString(floodFill(image, sr, sc, color)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        if (image[sr][sc] == color) {
+            return image;
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
-            }
+        fill(image, sr, sc, image[sr][sc], color);
+        return image;
+    }
+
+    public static void fill(int[][] image, int i, int j, int color, int newColor) {
+        if (i < 0 || i >= image.length || j < 0 || j >= image[0].length || image[i][j] != color) {
+            return;
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        image[i][j] = newColor;
+        fill(image, i + 1, j, color, newColor);
+        fill(image, i - 1, j, color, newColor);
+        fill(image, i, j + 1, color, newColor);
+        fill(image, i, j - 1, color, newColor);
     }
 }
