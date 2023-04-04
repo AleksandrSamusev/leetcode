@@ -1,26 +1,37 @@
-import java.util.Arrays;
+//200. Number of Islands
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        char[][] grid = {
+                {'1', '1', '1', '1', '0'},
+                {'1', '1', '0', '1', '0'},
+                {'1', '1', '0', '0', '0'},
+                {'0', '0', '0', '0', '0'}
+        };
+        System.out.println(numIslands(grid));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int numIslands(char[][] grid) {
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == '1') {
+                    count++;
+                    callBfs(grid, i, j);
+                }
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        return count;
+    }
+
+    public static void callBfs(char[][] grid, int i, int j) {
+        if (i < 0 || i > grid.length || j < 0 || j > grid[i].length || grid[i][j] != '1') {
+            return;
         }
-        return result;
+        grid[i][j] = 0;
+        callBfs(grid, i + 1, j);
+        callBfs(grid, i - 1, j);
+        callBfs(grid, i, j + 1);
+        callBfs(grid, i, j - 1);
     }
 }
