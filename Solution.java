@@ -1,26 +1,25 @@
-import java.util.Arrays;
+//2390. Removing Stars From a String
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "leet**cod*e";
+        System.out.println(removeStars(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String removeStars(String s) {
+        StringBuilder sb = new StringBuilder();
+        int sbIndex = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '*') {
+                if (sbIndex != 0) {
+                    sb.delete(sbIndex - 1, sbIndex);
+                    sbIndex--;
+                }
+            } else {
+                sb.append(s.charAt(i));
+                sbIndex++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return sb.toString();
     }
 }
