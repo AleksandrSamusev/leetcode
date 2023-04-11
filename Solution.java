@@ -1,25 +1,41 @@
+//2120. Execution of All Suffix Instructions Staying in a Grid
+
 import java.util.Arrays;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int n = 3;
+        int[] startPos = {0, 1};
+        String s = "RRDDLU";
+        System.out.println(Arrays.toString(executeInstructions(n, startPos, s)));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static int[] executeInstructions(int n, int[] startPos, String s) {
+        if (n == 1) {
+            return new int[s.length()];
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        int[] result = new int[s.length()];
+        int[] newPos;
+
+        for (int i = 0; i < s.length(); i++) {
+            newPos = Arrays.copyOf(startPos, startPos.length);
+            for (int j = i; j < s.length(); j++) {
+                if (s.charAt(j) == 'R' && newPos[1] < n - 1) {
+                    result[i]++;
+                    newPos[1]++;
+                } else if (s.charAt(j) == 'L' && newPos[1] > 0) {
+                    result[i]++;
+                    newPos[1]--;
+                } else if (s.charAt(j) == 'U' && newPos[0] > 0) {
+                    result[i]++;
+                    newPos[0]--;
+                } else if (s.charAt(j) == 'D' && newPos[0] < n - 1) {
+                    result[i]++;
+                    newPos[0]++;
+                } else {
+                    break;
+                }
             }
-        }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
         }
         return result;
     }
