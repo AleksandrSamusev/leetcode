@@ -1,26 +1,26 @@
-import java.util.Arrays;
+//1556. Thousand Separator
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int n = 1234123412;
+        System.out.println(thousandSeparator(n));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String thousandSeparator(int n) {
+        String number = Integer.toString(n);
+        int counter = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = number.length() - 1; i >= 0; i--) {
+            if (counter == 3) {
+                sb.append(".");
+                counter = 0;
+                sb.append(number.charAt(i));
+                counter++;
+            } else {
+                sb.append(number.charAt(i));
+                counter++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return sb.reverse().toString();
     }
 }
