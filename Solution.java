@@ -1,26 +1,27 @@
-import java.util.Arrays;
+//1436. Destination City
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        List<List<String>> paths = List.of(List.of("London", "New York"),
+                List.of("New York", "Lima"),
+                List.of("Lima", "Sao Paulo"));
+        System.out.println(destCity(paths));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
+    public static String destCity(List<List<String>> paths) {
+        Set<String> set = new HashSet<>();
+        for (List<String> list : paths) {
+            set.add(list.get(0));
         }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+        for (List<String> list : paths) {
+            if (!set.contains(list.get(1))) {
+                return list.get(1);
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return null;
     }
 }
