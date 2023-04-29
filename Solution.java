@@ -1,26 +1,55 @@
-import java.util.Arrays;
+//1576. Replace All ?'s to Avoid Consecutive Repeating Characters
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String s = "a?";
+        System.out.println(modifyString(s));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String modifyString(String s) {
+        if (s.length() == 1) {
+            if (s.charAt(0) == '?') {
+                return "a";
+            } else {
+                return s;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        StringBuilder sb = new StringBuilder();
+        char lastChar = 0;
+        char ch1;
+        char ch2;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '?') {
+                if (i == 0) {
+                    ch1 = ch2 = s.charAt(i + 1);
+                } else if (i == s.length() - 1 && lastChar != 0) {
+                    ch1 = ch2 = lastChar;
+                } else if (i == s.length() - 1 && lastChar == 0) {
+                    ch1 = ch2 = s.charAt(i - 1);
+                } else if (s.charAt(i - 1) == '?') {
+                    ch1 = lastChar;
+                    ch2 = s.charAt(i + 1);
+                } else {
+                    ch1 = s.charAt(i - 1);
+                    ch2 = s.charAt(i + 1);
+                }
+                lastChar = getChar(ch1, ch2);
+                sb.append(lastChar);
+            } else {
+                sb.append(s.charAt(i));
+            }
         }
-        return result;
+        return sb.toString();
     }
+
+    private static char getChar(char ch1, char ch2) {
+        for (int i = 97; i <= 122; i++) {
+            char result = (char) i;
+            if (result != ch1 && result != ch2) {
+                return result;
+            }
+        }
+        return 0;
+    }
+
 }
