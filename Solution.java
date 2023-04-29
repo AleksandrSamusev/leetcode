@@ -1,26 +1,41 @@
-import java.util.Arrays;
+//1694. Reformat Phone Number
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        String number = "123 4-5678";
+        System.out.println(reformatNumber(number));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static String reformatNumber(String number) {
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        for (int i = 0; i < number.length(); i++) {
+            if (number.charAt(i) != ' ' && number.charAt(i) != '-') {
+                sb.append(number.charAt(i));
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
+        String reformatted = sb.toString();
+        int index = 0;
+        if (reformatted.length() <= 3) {
+            return reformatted;
+        } else if (reformatted.length() == 4) {
+            return reformatted.substring(0, 2) + "-" + reformatted.substring(2);
         }
-        return result;
+        while ((reformatted.length() - index) > 4) {
+            sb2.append(reformatted.charAt(index))
+                    .append(reformatted.charAt(index + 1))
+                    .append(reformatted.charAt(index + 2))
+                    .append("-");
+            index += 3;
+        }
+        if (reformatted.length() - index <= 3) {
+            sb2.append(reformatted.substring(index));
+            return sb2.toString();
+        } else if (reformatted.length() - index == 4) {
+            sb2.append(reformatted, index, index + 2).append("-")
+                    .append(reformatted.substring(index + 2));
+            return sb2.toString();
+        }
+        return null;
     }
 }
