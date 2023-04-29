@@ -1,26 +1,20 @@
-import java.util.Arrays;
+//1450. Number of Students Doing Homework at a Given Time
 
 public class Solution {
     public static void main(String[] args) {
-        int[] nums = {7,7,6,10,6,5,5,8,8,9,9,11,11};
-        System.out.println(singleNumber(nums));
+        int[] startTime = {1, 2, 3};
+        int[] endTime = {3, 2, 7};
+        int queryTime = 4;
+        System.out.println(busyStudent(startTime, endTime, queryTime));
     }
 
-    public static int singleNumber(int[] nums) {
-        var result = 0;
-        Arrays.sort(nums);
-        System.out.println(Arrays.toString(nums));
-        if(nums[0] != nums[1]) {
-            result = nums[0];
-        }
-        for(int i = 1; i<nums.length-2; i++) {
-            if(nums[i] != nums[i-1] && nums[i] != nums[i+1]) {
-                result = nums[i];
+    public static int busyStudent(int[] startTime, int[] endTime, int queryTime) {
+        int counter = 0;
+        for (int i = 0; i < startTime.length; i++) {
+            if (startTime[i] <= queryTime && endTime[i] >= queryTime) {
+                counter++;
             }
         }
-        if(nums[nums.length-1] != nums[nums.length-2]) {
-            result = nums[nums.length-1];
-        }
-        return result;
+        return counter;
     }
 }
